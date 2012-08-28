@@ -159,17 +159,6 @@ def getUserInfo(netflix,user):
     recommendations = user.getInfo('recommendations')
     print simplejson.dumps(recommendations,indent=4)
 
-    ######################################
-    # Rental History
-    ######################################
-    # Simple rental history
-    history = netflix.user.getRentalHistory()
-    print simplejson.dumps(history,indent=4)
-
-    # A little more complicated, let's use mintime to get recent shipments
-    history = netflix.user.getRentalHistory('shipped',updatedMin=1219775019,maxResults=4)
-    print simplejson.dumps(history,indent=4)
-
 def userQueue(netflix,user):
     ######################################
     # Here's a queue.  Let's play with it
@@ -177,9 +166,9 @@ def userQueue(netflix,user):
     queue = NetflixUserQueue(netflix.user)
     print "*** Add a movie to the queue ***"
     print simplejson.dumps(queue.getContents(), indent=4)
-    print queue.addTitle( urls=["http://api.netflix.com/catalog/titles/movies/60002013"] )
+    print queue.addTitle( urls=["http://api-public.netflix.com/catalog/titles/movies/60002013"] )
     print "*** Move it to the top! ***"
-    print queue.addTitle( urls=["http://api.netflix.com/catalog/titles/movies/60002013"], position=1 )
+    print queue.addTitle( urls=["http://api-public.netflix.com/catalog/titles/movies/60002013"], position=1 )
     print "*** Take it out ***"
     print queue.removeTitle( id="60002013")
     
@@ -226,11 +215,11 @@ if __name__ == '__main__':
     time.sleep(1)
     doAutocomplete(netflixClient,'Coc')
     time.sleep(1)
-    movie = getTitleFromID(netflixClient,'http://api.netflix.com/catalog/titles/movies/60002013')
+    movie = getTitleFromID(netflixClient,'http://api-public.netflix.com/catalog/titles/movies/60002013')
     time.sleep(1)
     getTitleInfo(netflixClient,movie)
     time.sleep(1)
-    findPerson(netflixClient,"Harrison Ford", "http://api.netflix.com/catalog/people/78726")
+    findPerson(netflixClient,"Harrison Ford", "http://api-public.netflix.com/catalog/people/78726")
     
     # Ratings (with/without user)
     if discs:

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from Netflix import *
 import getopt
 import time 

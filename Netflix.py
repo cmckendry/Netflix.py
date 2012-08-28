@@ -14,10 +14,10 @@ from xml.dom.minidom import parseString
 import simplejson
 from urlparse import urlparse
 
-HOST              = 'api.netflix.com'
+HOST              = 'api-public.netflix.com'
 PORT              = '80'
-REQUEST_TOKEN_URL = 'http://api.netflix.com/oauth/request_token'
-ACCESS_TOKEN_URL  = 'http://api.netflix.com/oauth/access_token'
+REQUEST_TOKEN_URL = 'http://api-public.netflix.com/oauth/request_token'
+ACCESS_TOKEN_URL  = 'http://api-public.netflix.com/oauth/access_token'
 AUTHORIZATION_URL = 'https://api-user.netflix.com/oauth/login'
 
 
@@ -171,35 +171,7 @@ class NetflixUser():
 
     def getRentalHistory(self,historyType=None,startIndex=None,
                                     maxResults=None,updatedMin=None):
-        accessToken=self.accessToken
-        parameters = {}
-        if startIndex:
-            parameters['start_index'] = startIndex
-        if maxResults:
-            parameters['max_results'] = maxResults
-        if updatedMin:
-            parameters['updated_min'] = updatedMin
-
-        if not isinstance(accessToken, oauth.OAuthToken):
-            accessToken = oauth.OAuthToken( 
-                                    accessToken['key'],
-                                    accessToken['secret'] )
-
-        if not historyType:
-            requestUrl = '/users/%s/rental_history' % (accessToken.key)
-        else:
-            requestUrl = '/users/%s/rental_history/%s' % (accessToken.key,historyType)
-        
-        try:
-            info = simplejson.loads( self.client._getResource( 
-                                    requestUrl,
-                                    parameters=parameters,
-                                    token=accessToken ) )
-        except:
-            return {}
-            
-        return info
-        
+        raise Exception("Rental History API access deprecated as of September 15, 2012. See here for more information: http://developer.netflix.com/blog/read/Upcoming_Changes_to_the_Netflix_API_Program") 
 
 class NetflixCatalog():
 

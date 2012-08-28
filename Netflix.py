@@ -191,10 +191,9 @@ class NetflixCatalog():
 
         return info['catalog_titles']['catalog_title']
 
-    def getCatalog(self):
-        requestUrl = '/catalog/titles/full'
-        parameters = {'v': '2.0'}
-        info = self.client._getResource(requestUrl, parameters=parameters)
+    def getCatalog(self, catalogType='streaming'):
+        requestUrl = '/catalog/titles/' + catalogType
+        info = self.client._getResource(requestUrl)
         return info
  
     def searchStringTitles(self, term,startIndex=None,maxResults=None):
@@ -463,7 +462,7 @@ class NetflixClient:
             print oauthRequest.to_url()
         self.connection.request('GET', oauthRequest.to_url())
         response = self.connection.getresponse()
-        if response.status in (301,302,):
+        if response.status in (301,302,307):
         ##TODO : Support multiple redirects (important)
             redirecturi = response.getheader('location')
             response = urllib2.urlopen(redirecturi)
